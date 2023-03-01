@@ -1,12 +1,40 @@
-import orderByProps from '../basic';
+import displayAttacks from '../basic';
 
-test('should sum', () => {
-  const obj1 = {
-    name: 'мечник', health: 10, level: 2, attack: 80, defence: 40,
+test('add default descr', () => {
+  const character = {
+    name: 'Лучник',
+    type: 'Bowman',
+    health: 50,
+    level: 3,
+    attack: 40,
+    defence: 10,
+    special: [
+      {
+        id: 8,
+        name: 'Двойной выстрел',
+        icon: 'http://...',
+        description: 'Двойной выстрел наносит двойной урон',
+      },
+      {
+        id: 9,
+        name: 'Нокаутирующий удар',
+        icon: 'http://...',
+      },
+    ],
   };
-  const result = orderByProps(obj1, ['name', 'level']);
-  const result2 = orderByProps(obj1);
-
-  expect(result).toStrictEqual(([{ key: 'name', value: 'мечник' }, { key: 'level', value: 2 }, { key: 'attack', value: 80 }, { key: 'defence', value: 40 }, { key: 'health', value: 10 }]));
-  expect(result2).toStrictEqual(([{ key: 'attack', value: 80 }, { key: 'defence', value: 40 }, { key: 'health', value: 10 }, { key: 'level', value: 2 }, { key: 'name', value: 'мечник' }]));
+  const result = displayAttacks(character);
+  expect(result).toStrictEqual([
+    {
+      id: 8,
+      name: 'Двойной выстрел',
+      icon: 'http://...',
+      description: 'Двойной выстрел наносит двойной урон',
+    },
+    {
+      id: 9,
+      name: 'Нокаутирующий удар',
+      icon: 'http://...',
+      description: 'Описание недоступно',
+    },
+  ]);
 });
